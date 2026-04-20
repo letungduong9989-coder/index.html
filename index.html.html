@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+var firebaseConfig = {
+  apiKey: "AIzaSyCyvMZDmvYqlJnMK8e6IfIruBl25QOgn6U",
+  authDomain: "aimlock-key.firebaseapp.com",
+  databaseURL: "https://aimlock-key-default-rtdb.firebaseio.com",
+  projectId: "aimlock-key",
+  storageBucket: "aimlock-key.appspot.com",
+  messagingSenderId: "718947516634",
+  appId: "1:718947516634:web:1e9a92623a3079f70b25e3"
+};
+
+// Init Firebase
+firebase.initializeApp(firebaseConfig);
+var db = firebase.database();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>SUPER AIMLOCK5.0</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    color:white;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255,0,0,0.25), transparent 40%),
+        radial-gradient(circle at 70% 80%, rgba(255,0,0,0.15), transparent 40%),
+        linear-gradient(180deg, #050000, #1a0000 40%, #000);
+}
+
+/* container */
+.container{
+    max-width:360px;
+    margin:20px auto;
+    padding:15px;
+}
+
+/* header */
+.header{text-align:center;}
+.header h1{
+    color:#ff4d4d;
+    text-shadow:0 0 10px red;
+}
+
+/* card */
+.card{
+    background:rgba(20,0,0,0.85);
+    border-radius:12px;
+    padding:12px;
+    margin-top:10px;
+    border:1px solid rgba(255,0,0,0.3);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 0 10px rgba(255,0,0,0.2);
+}
+
+.card.active{
+    box-shadow:0 0 20px red;
+}
+
+.title{color:#ff4d4d;font-weight:bold;}
+.desc{font-size:12px;color:#aaa;}
+
+/* switch */
+.switch{
+    position:relative;
+    width:50px;
+    height:25px;
+}
+.switch input{display:none;}
+
+.slider{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#330000;
+    border-radius:20px;
+}
+.slider::before{
+    content:"";
+    position:absolute;
+    width:20px;
+    height:20px;
+    left:3px;
+    top:2px;
+    background:white;
+    border-radius:50%;
+    transition:0.3s;
+}
+input:checked + .slider{
+    background:red;
+}
+input:checked + .slider::before{
+    transform:translateX(24px);
+}
+
+/* sensi */
+input[type="range"]{
+    width:100%;
+    accent-color:red;
+}
+
+/* chart */
+.chart-box{
+    margin-top:15px;
+    height:150px;
+    border-radius:10px;
+    background:#0a0000;
+    border:1px solid red;
+    position:relative;
+    overflow:hidden;
+}
+
+.chart-grid{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-image:
+        linear-gradient(rgba(255,0,0,0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,0,0,0.2) 1px, transparent 1px);
+    background-size:20px 20px;
+}
+
+svg{width:100%;height:100%;}
+#fpsLine{stroke:#ff1a1a;fill:none;stroke-width:2;}
+
+.fps-info{
+    position:absolute;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    padding:5px 10px;
+    font-size:11px;
+}
+
+.extra-info{
+    position:absolute;
+    bottom:5px;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    padding:0 10px;
+    font-size:10px;
+}
+
+/* ZALO BUTTON */
+.admin-btn{
+    position:fixed;
+    bottom:30px;
+    right:30px;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:red;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 0 20px red;
+    z-index:9999;
+}
+.admin-btn img{width:30px;}
+
+/* popup */
+.popup{
+    position:fixed;
+    bottom:100px;
+    right:30px;
+    width:200px;
+    background:#1a0000;
+    border-radius:10px;
+    padding:12px;
+    display:none;
+    box-shadow:0 0 15px red;
+}
+
+.zalo-btn{
+    display:block;
+    margin-top:8px;
+    padding:6px;
+    text-align:center;
+    background:red;
+    color:white;
+    border-radius:6px;
+    text-decoration:none;
+}
+
+/* PRO BUTTON */
+.pro-btn{
+    width:100%;
+    text-align:center;
+    padding:10px;
+    border-radius:25px;
+    margin-top:10px;
+    border:1px solid #a020f0;
+    color:#d580ff;
+    background:rgba(30,0,50,0.9);
+    box-shadow:0 0 20px #a020f0;
+    cursor:pointer;
+}
+
+
+.btn{
+    width:100%;
+    padding:8px;
+    border-radius:20px;
+    border:none;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+.chart-box{
+    width:100%;
+    height:120px;
+    border-radius:10px;
+    background:#0a0000;
+    border:1px solid red;
+    margin-top:8px;
+    overflow:hidden;
+}
+
+.pro-btn{
+    width:100%;
+    padding:12px;
+    border-radius:25px;
+    border:none;
+    background:linear-gradient(45deg,#6a00ff,#b300ff);
+    color:white;
+    font-weight:bold;
+    box-shadow:0 0 15px #a020f0;
+}
+.random-btn{
+    background: linear-gradient(45deg, #ff0000, #ff3333);
+    box-shadow: 0 0 10px red, 0 0 20px red;
+    color: white;
+    border: none;
+}
+
+.random-btn:hover{
+    box-shadow: 0 0 20px red, 0 0 40px red;
+    transform: scale(1.05);
+}
+
+.btn{
+    width:100%;
+    padding:10px;
+    margin:5px 0;
+    border-radius:20px;
+    border:none;
+    font-weight:bold;
+    color:white;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+}
+
+/* riêng từng nút */
+.btn:nth-child(1){background:#ff1a1a;box-shadow:0 0 10px red;}
+.btn:nth-child(2){background:#ff4d00;box-shadow:0 0 10px orange;}
+.btn:nth-child(3){background:#9900ff;box-shadow:0 0 10px purple;}
+.btn:nth-child(4){background:#0099ff;box-shadow:0 0 10px cyan;}
+.admin-btn img{
+    width:30px;
+    height:30px;
+    object-fit:contain;
+}
+/* LOGIN */
+#loginScreen{
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255,0,0,0.3), transparent 40%),
+        radial-gradient(circle at 70% 80%, rgba(255,0,0,0.2), transparent 40%),
+        linear-gradient(180deg,#000,#1a0000);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:999999;
+}
+
+.login-box{
+    width:320px;
+    padding:20px;
+    border-radius:15px;
+    background:rgba(20,0,0,0.95);
+    border:1px solid red;
+    box-shadow:0 0 30px red;
+    text-align:center;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+    from{box-shadow:0 0 10px red;}
+    to{box-shadow:0 0 35px red;}
+}
+
+.login-title{
+    font-size:20px;
+    color:#ff4d4d;
+    margin-bottom:15px;
+    text-shadow:0 0 10px red;
+}
+
+.login-box input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid red;
+    background:#000;
+    color:white;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+#loginBtn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(45deg,#ff0000,#ff4d4d);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 15px red;
+    transition:0.2s;
+}
+
+#loginBtn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 30px red;
+}
+
+#loginMsg{
+    margin-top:10px;
+    font-size:13px;
+}
+
+/* loading */
+.loader{
+    display:none;
+    margin:10px auto;
+    border:3px solid #330000;
+    border-top:3px solid red;
+    border-radius:50%;
+    width:25px;
+    height:25px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg);}
+}
+/* LOGIN */
+#loginScreen{
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255,0,0,0.3), transparent 40%),
+        radial-gradient(circle at 70% 80%, rgba(255,0,0,0.2), transparent 40%),
+        linear-gradient(180deg,#000,#1a0000);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:999999;
+}
+
+.login-box{
+    width:320px;
+    padding:20px;
+    border-radius:15px;
+    background:rgba(20,0,0,0.95);
+    border:1px solid red;
+    box-shadow:0 0 30px red;
+    text-align:center;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+    from{box-shadow:0 0 10px red;}
+    to{box-shadow:0 0 35px red;}
+}
+
+.login-title{
+    font-size:20px;
+    color:#ff4d4d;
+    margin-bottom:15px;
+    text-shadow:0 0 10px red;
+}
+
+.login-box input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid red;
+    background:#000;
+    color:white;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+#loginBtn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(45deg,#ff0000,#ff4d4d);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 15px red;
+    transition:0.2s;
+}
+
+#loginBtn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 30px red;
+}
+
+#loginMsg{
+    margin-top:10px;
+    font-size:13px;
+}
+
+/* loading */
+.loader{
+    display:none;
+    margin:10px auto;
+    border:3px solid #330000;
+    border-top:3px solid red;
+    border-radius:50%;
+    width:25px;
+    height:25px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg);}
+}
+.note-pro{
+    margin-top:30px;
+    padding:15px;
+    border-radius:15px;
+    position:relative;
+    overflow:hidden;
+
+    background:linear-gradient(180deg,#1a0000,#000);
+    border:1px solid rgba(255,0,0,0.6);
+
+    box-shadow:
+        0 0 10px rgba(255,0,0,0.3),
+        0 0 25px rgba(255,0,0,0.2);
+
+    animation: glowRed 2s infinite alternate;
+}
+
+/* glow nhịp */
+@keyframes glowRed{
+    from{box-shadow:0 0 10px rgba(255,0,0,0.3);}
+    to{box-shadow:0 0 25px rgba(255,0,0,0.8);}
+}
+
+/* viền chạy ánh sáng */
+.note-pro::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:15px;
+    padding:1px;
+    background:linear-gradient(120deg, transparent, red, transparent);
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: borderRun 3s linear infinite;
+}
+
+@keyframes borderRun{
+    0%{transform:translateX(-100%);}
+    100%{transform:translateX(100%);}
+}
+
+/* tiêu đề */
+.note-title{
+    color:#ff4d4d;
+    font-weight:bold;
+    text-align:center;
+    margin-bottom:10px;
+    text-shadow:0 0 10px red;
+    font-size:14px;
+}
+
+/* list */
+.note-pro ul{
+    padding-left:18px;
+    margin:0;
+}
+
+.note-pro li{
+    font-size:12px;
+    color:#ff9999;
+    margin-bottom:5px;
+    position:relative;
+}
+
+/* icon chấm đỏ */
+.note-pro li::marker{
+    color:red;
+}
+.note-pro{
+    margin-top:20px; /* 👈 tạo khoảng cách */
+}
+
+
+#hackerBox::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:10px;
+    padding:1px;
+    background:linear-gradient(120deg, transparent, #00ff99, transparent);
+    animation:runBorder 3s linear infinite;
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+}
+
+@keyframes runBorder{
+    0%{transform:translateX(-100%);}
+    100%{transform:translateX(100%);}
+}
+
+/* animation chạy */
+@keyframes bgMove{
+    0%{transform:translateX(-100%);}
+    100%{transform:translateX(100%);}
+}
+
+/* animation glow */
+@keyframes pulseGlow{
+    from{opacity:0.3;}
+    to{opacity:0.8;}
+}
+
+
+/* khi hover */
+.pro-card:hover{
+    box-shadow:
+        0 0 20px red,
+        0 0 40px rgba(255,0,0,0.6);
+    transform:scale(1.02);
+}
+#proScreen::before,
+#proScreen::after{
+    pointer-events: none;
+}
+#proScreen{
+    position:fixed;
+    inset:0;
+    display:none;
+    z-index:99999;
+    padding:20px;
+    overflow:auto;
+    position:relative; /* thêm dòng này */
+}
+#proScreen{
+    will-change: transform;
+    backface-visibility: hidden;
+}
+input, textarea {
+    font-size: 16px !important;
+}
+html, body {
+    touch-action: manipulation;
+    overflow-x: hidden;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PRO -->
+<div id="loginScreen">
+    <div class="login-box">
+
+        <div class="login-title">🔐 KEY AIMLOCK SUPER5.0</div>
+
+        <input type="text" id="keyInput" placeholder="Nhập key của bạn...">
+
+        <button onclick="checkKey()" id="loginBtn">
+            🚀 KÍCH HOẠT
+        </button>
+
+        <div id="loginMsg"></div>
+        <div class="loader" id="loader"></div>
+
+        <!-- ✅ NOTE ĐƯA VÀO ĐÂY -->
+        <div class="note-pro">
+            <div class="note-title">⚠ LƯU Ý QUAN TRỌNG</div>
+            <ul>
+                <li>Không chia sẻ key để tránh bị khóa</li>
+                <li>Key giới hạn số thiết bị</li>
+                <li>Key hết hạn sẽ tự động vô hiệu hóa</li>
+                <li>ADMIN: TUNGDUONG - ZALO: 0352035713</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+
+<div class="header">
+<h1>SUPER AIMLOCK5.0</h1>
+</div>
+
+<!-- AIM -->
+<div class="card">
+<div class="title">AIMLOCK</div>
+<label class="switch">
+<input type="checkbox" onchange="toggle(this)">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="card">
+<div class="title">AI AIM</div>
+<label class="switch">
+<input type="checkbox" onchange="toggle(this)">
+<span class="slider"></span>
+</label>
+</div>
+
+<!-- MAIN CONTROL -->
+<div class="card" style="display:block">
+
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div class="title">ANTI BYPASS</div>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <!-- AIMBOT POWER -->
+    <div style="margin-top:10px">
+        <div class="title">AIMBOT POWER</div>
+        <input type="range" min="0" max="100" value="50" id="aimbotSlider">
+        <div class="desc">POWER: <span id="aimbotValue">50</span></div>
+    </div>
+
+    <!-- SENSITIVITY -->
+    <div style="margin-top:10px">
+        <div class="title">SENSITIVITY</div>
+        <input type="range" min="1" max="100" value="50" id="sensiSlider">
+        <div class="desc">VALUE: <span id="sensiValue">50</span></div>
+    </div>
+
+    <!-- RANDOM -->
+    <button onclick="randomSensi()" class="btn random-btn">
+    🎯 RANDOM
+</button>
+<div class="card" style="display:block; text-align:center">
+
+    <button onclick="runBypass()" class="btn">🔐 BYPASS</button>
+    <button onclick="runFPSBoost()" class="btn">🚀 FPS BOOST</button>
+    <button onclick="runAI()" class="btn">🤖 AI AIM</button>
+    <button onclick="runScan()" class="btn">📡 SCAN</button>
+
+</div>
+
+<!-- CHART FPS -->
+<div class="card" style="display:block">
+
+    <div class="chart-box">
+
+        <div class="fps-info">
+            <span>MAX 144</span>
+            <span id="fpsNow">60 FPS</span>
+            <span>MIN 30</span>
+        </div>
+
+        <div class="extra-info">
+            <span id="ram">RAM: --</span>
+            <span id="ping">PING: --</span>
+        </div>
+
+        <div class="chart-grid"></div>
+
+        <svg viewBox="0 0 300 150">
+            <polyline id="fpsLine"></polyline>
+        </svg>
+
+    </div>
+
+</div>
+
+</div> <!-- END CONTAINER -->
+
+<div id="optimizeBox" style="
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.7);
+display:none;
+z-index:999999;
+justify-content:center;
+align-items:center;
+">
+
+    <div style="
+    width:320px;
+    background:#050000;
+    border:1px solid red;
+    border-radius:12px;
+    box-shadow:0 0 25px red;
+    padding:15px;
+    color:#00ffcc;
+    font-family:monospace;
+    ">
+
+        <div style="
+        color:#ff4d4d;
+        margin-bottom:10px;
+        text-align:center;
+        font-weight:bold;
+        ">
+        ⚡ SYSTEM OPTIMIZER
+        </div>
+
+        <div id="optimizeContent" style="
+        height:150px;
+        overflow:auto;
+        font-size:12px;
+        line-height:1.4;
+        "></div>
+
+    </div>
+
+</div>
+
+<div id="proScreen" style="display:none;">
+<h2 style="color:#b366ff;text-align:center;">PRO SETTINGS</h2>
+
+<div id="hackerBox" style="
+background:#000;
+color:#00ff99;
+font-family:monospace;
+font-size:12px;
+padding:10px;
+height:100px;
+overflow:auto;
+border:1px solid #00ff99;
+border-radius:10px;
+box-shadow:0 0 15px #00ff99;
+margin-bottom:10px;
+"></div>
+
+<!-- ZALO -->
+<div class="admin-btn" onclick="togglePopup()">
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg">
+</div>
+
+<div class="popup" id="popup">
+<h3>ADMIN</h3>
+<p>Zalo: 0352035713</p>
+<a class="zalo-btn" href="https://zalo.me/0352035713" target="_blank">Liên hệ</a>
+</div>
+
+<script>
+
+
+// ===== SOUND =====
+let sound = new Audio("https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg");
+let hackSound = new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");
+
+sound.load();
+hackSound.load();
+
+// ===== UNLOCK =====
+document.addEventListener("click", () => {
+    sound.play().then(()=>sound.pause()).catch(e=>console.log(e));
+    hackSound.play().then(()=>hackSound.pause()).catch(e=>console.log(e));
+}, { once: true });
+
+// ===== PLAY SAFE =====
+function playSound(){
+    sound.currentTime = 0;
+    sound.play().catch(()=>{});
+}
+
+function playHack(){
+    hackSound.currentTime = 0;
+    hackSound.play().catch(()=>{});
+}
+// ===== TOGGLE =====
+function toggle(el){
+    el.closest(".card").classList.toggle("active", el.checked);
+
+    sound.currentTime = 0;
+    sound.play();
+}
+
+// ===== SLIDER SOUND =====
+function playSlideSound(){
+    sound.currentTime = 0;
+    sound.play();
+}
+
+// ===== POPUP =====
+function togglePopup(){
+    let p = document.getElementById("popup");
+    p.style.display = p.style.display==="block"?"none":"block";
+}
+
+// ===== FPS =====
+let data=[];
+setInterval(()=>{
+    let fps = Math.floor(50+Math.random()*50);
+    document.getElementById("fpsNow").innerText=fps+" FPS";
+    document.getElementById("ram").innerText="RAM: "+(2+Math.random()*3).toFixed(1)+"GB";
+    document.getElementById("ping").innerText="PING: "+Math.floor(20+Math.random()*40);
+
+    data.push(fps);
+    if(data.length>40)data.shift();
+
+    let pts="";
+    data.forEach((v,i)=>{
+        let x=i*(300/39);
+        let y=150-(v/144)*150;
+        pts+=x+","+y+" ";
+    });
+
+    document.getElementById("fpsLine").setAttribute("points",pts);
+},120);
+
+// ===== AIMBOT =====
+const aim = document.getElementById("aimbotSlider");
+const aimText = document.getElementById("aimbotValue");
+
+aim.oninput = ()=>{
+    aimText.innerText = aim.value;
+    playSlideSound();
+};
+
+// ===== SENSI =====
+const sensi = document.getElementById("sensiSlider");
+const sensiText = document.getElementById("sensiValue");
+
+sensi.oninput = ()=>{
+    sensiText.innerText = sensi.value;
+    playSlideSound();
+};
+
+// ===== RANDOM =====
+function randomSensi(){
+
+    let devices = [
+        [60,80],
+        [50,75],
+        [40,70],
+        [35,65]
+    ];
+
+    let d = devices[Math.floor(Math.random()*devices.length)];
+    let target = Math.floor(Math.random()*(d[1]-d[0]) + d[0]);
+
+    let current = parseInt(sensi.value);
+    let step = target > current ? 1 : -1;
+
+    let run = setInterval(()=>{
+        current += step;
+        sensi.value = current;
+        sensiText.innerText = current;
+
+        if(current == target){
+            clearInterval(run);
+        }
+    },10);
+}
+
+// ===== RUN BOX (FIX CHÍNH Ở ĐÂY) =====
+function runBox(lines){
+
+    hackSound.currentTime = 0;
+    hackSound.play();
+
+    const box = document.getElementById("optimizeBox");
+    const content = document.getElementById("optimizeContent");
+
+    box.style.display = "flex";
+    content.innerHTML = "";
+
+    let i = 0;
+
+    let run = setInterval(()=>{
+        if(i < lines.length){
+            content.innerHTML += "➤ " + lines[i] + "<br>";
+            content.scrollTop = content.scrollHeight;
+            i++;
+        }else{
+            clearInterval(run);
+
+            setTimeout(()=>{
+                box.style.display = "none";
+            },1200);
+        }
+    },250);
+}
+
+// ===== BUTTON ACTION =====
+function runBypass(){
+    runBox([
+        "Connecting to server...",
+        "Detecting anti-cheat...",
+        "Injecting bypass...",
+        "Cracking security layer...",
+        "Access granted ✔",
+        "ANTI-CHEAT BYPASSED 🔓"
+    ]);
+}
+
+function runFPSBoost(){
+    runBox([
+        "Analyzing FPS...",
+        "Reducing lag...",
+        "Unlocking 144FPS...",
+        "Stabilizing frame...",
+        "FPS BOOST ACTIVATED 🚀"
+    ]);
+}
+
+function runAI(){
+    runBox([
+        "Loading AI model...",
+        "Analyzing enemy movement...",
+        "Training aim assist...",
+        "Calibrating accuracy...",
+        "AI AIM READY 🎯"
+    ]);
+}
+
+function runScan(){
+    runBox([
+        "Scanning device...",
+        "CPU: A17 Pro detected",
+        "RAM: 8GB",
+        "GPU: Apple GPU",
+        "Status: OPTIMIZED ✔"
+    ]);
+}
+// ===== DEVICE ID =====
+function getDeviceID(){
+    const _0x2d49d4=_0x3ea3;function _0x3621(){const _0x7e7a7=['getItem','17260FeGFTV','1278OBzehY','428UNOJnm','183924WlWLnl','48akfyCt','516112XbWkog','3444948pokTjD','device_id','2iYfbUe','7186586cDjoxT','41090STloMQ','6074568DAZKXt','105SDsXQs'];_0x3621=function(){return _0x7e7a7;};return _0x3621();}(function(_0x4cc9b6,_0x47611c){const _0x192977=_0x3ea3,_0x5e465e=_0x4cc9b6();while(!![]){try{const _0x5cc0b3=parseInt(_0x192977(0x7a))/0x1*(parseInt(_0x192977(0x7d))/0x2)+-parseInt(_0x192977(0x7b))/0x3+parseInt(_0x192977(0x77))/0x4*(-parseInt(_0x192977(0x75))/0x5)+-parseInt(_0x192977(0x78))/0x6*(-parseInt(_0x192977(0x73))/0x7)+-parseInt(_0x192977(0x80))/0x8+parseInt(_0x192977(0x76))/0x9*(-parseInt(_0x192977(0x7f))/0xa)+-parseInt(_0x192977(0x7e))/0xb*(-parseInt(_0x192977(0x79))/0xc);if(_0x5cc0b3===_0x47611c)break;else _0x5e465e['push'](_0x5e465e['shift']());}catch(_0x1c222d){_0x5e465e['push'](_0x5e465e['shift']());}}}(_0x3621,0xb1eab));function _0x3ea3(_0x4ddbcb,_0xf048f2){_0x4ddbcb=_0x4ddbcb-0x73;const _0x3621c3=_0x3621();let _0x3ea3de=_0x3621c3[_0x4ddbcb];return _0x3ea3de;}let id=localStorage[_0x2d49d4(0x74)](_0x2d49d4(0x7c));
+
+    if(!id){
+        id = "DEV-" + Math.random().toString(36).substr(2,10);
+        localStorage.setItem("device_id", id);
+    }
+
+    return id;
+}
+
+// ===== LOGIN =====
+function checkKey(){
+
+    let key = document.getElementById("keyInput").value.trim();
+    function _0x5787(_0x12c9ab,_0x5ace5e){_0x12c9ab=_0x12c9ab-0xe9;const _0x10df14=_0x10df();let _0x57879a=_0x10df14[_0x12c9ab];return _0x57879a;}const _0x28844d=_0x5787;function _0x10df(){const _0x65374c=['1111YWFuFk','loginMsg','3970629pZCkHL','188380scpuRW','10KyzzBF','14IInHjM','1362hkUCcP','235390VFiaAw','7171752dGhFrv','4736730PiogFO','804bkIjbF','10106656DbpWpr'];_0x10df=function(){return _0x65374c;};return _0x10df();}(function(_0x479c9c,_0x320f8c){const _0x1de990=_0x5787,_0x1f7135=_0x479c9c();while(!![]){try{const _0x2ab51a=parseInt(_0x1de990(0xf1))/0x1*(parseInt(_0x1de990(0xf3))/0x2)+-parseInt(_0x1de990(0xf2))/0x3*(parseInt(_0x1de990(0xea))/0x4)+parseInt(_0x1de990(0xf0))/0x5*(-parseInt(_0x1de990(0xe9))/0x6)+-parseInt(_0x1de990(0xeb))/0x7+parseInt(_0x1de990(0xf4))/0x8+-parseInt(_0x1de990(0xee))/0x9+-parseInt(_0x1de990(0xef))/0xa*(-parseInt(_0x1de990(0xec))/0xb);if(_0x2ab51a===_0x320f8c)break;else _0x1f7135['push'](_0x1f7135['shift']());}catch(_0x1f3771){_0x1f7135['push'](_0x1f7135['shift']());}}}(_0x10df,0xd9b24));let msg=document['getElementById'](_0x28844d(0xed));
+
+    if(!key){
+        msg.innerText = "❌ Nhập key!";
+        msg.style.color = "red";
+        return;
+    }
+
+    db.ref("keys/" + key).once("value").then(snap => {
+
+        if(!snap.exists()){
+            msg.innerText = "❌ Key không tồn tại";
+            msg.style.color = "red";
+            return;
+        }
+
+        let data = snap.val();
+        let list = data.devices || [];
+
+        // device id
+        let device = localStorage.getItem("device_id");
+
+        if(!device){
+            device = "DEV-" + Math.random().toString(36).substr(2,12);
+            localStorage.setItem("device_id", device);
+        }
+
+        // status
+        if(data.status !== true){
+            msg.innerText = "⛔ Key bị khóa";
+            msg.style.color = "orange";
+            return;
+        }
+
+        // expired
+        if(new Date() > new Date(data.expired)){
+            msg.innerText = "⛔ Key hết hạn";
+            msg.style.color = "orange";
+            return;
+        }
+
+        // limit device
+        if(!list.includes(device) && list.length >= data.deviceLimit){
+            msg.innerText = "❌ Hết lượt thiết bị";
+            msg.style.color = "red";
+            return;
+        }
+
+        // add device
+        if(!list.includes(device)){
+            list.push(device);
+
+            db.ref("keys/" + key).update({
+                devices: list
+            });
+        }
+
+        // login OK
+        localStorage.setItem("active_key", key);
+        localStorage.setItem("logged", "true");
+
+        msg.innerText = "✔ Kích hoạt thành công";
+        msg.style.color = "#00ff99";
+
+        setTimeout(()=>{
+            document.getElementById("loginScreen").style.display = "none";
+        },500);
+
+    });
+}
+
+
+// ===== CHECK NGẦM (ANTI BYPASS) =====
+function securityCheck(){
+
+    let key = localStorage.getItem("active_key");
+
+    // không có key
+    if(!key){
+        location.reload();
+        return;
+    }
+
+    db.ref("keys/" + key).once("value").then(snap=>{
+
+        if(!snap.exists()){
+            localStorage.clear();
+            location.reload();
+            return;
+        }
+
+        let d = snap.val();
+
+        // check hết hạn + status
+        if(!d || d.status !== true || new Date() > new Date(d.expired)){
+            localStorage.clear();
+            location.reload();
+            return;
+        }
+
+        // check device
+        let device = localStorage.getItem("device_id");
+
+        if(d.device && d.device !== device){
+            localStorage.clear();
+            location.reload();
+        }
+
+    });
+
+}
+
+// ===== HACKER TEXT =====
+
+function typeLine(text, box, callback){
+    let i = 0;
+    let line = document.createElement("div");
+    box.appendChild(line);
+
+    let typing = setInterval(()=>{
+        line.innerHTML = "➤ " + text.slice(0, i) + "<span>|</span>";
+        i++;
+
+        if(i > text.length){
+            clearInterval(typing);
+            line.innerHTML = "➤ " + text;
+            if(callback) setTimeout(callback, 200);
+        }
+    }, 20 + Math.random()*40);
+}
+</script>
+
+</body>
+</html>
